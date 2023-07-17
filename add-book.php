@@ -12,6 +12,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
     include "php/func-category.php";
     $categories = get_all_categories($conn);
 
+
     
 ?>
 
@@ -76,7 +77,10 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
       </div>
     </nav>
     
-    <form action="./php/add-book.php" method="post" enctype="multipart/form-data" class="max-w-screen-xl mx-auto pt-28 item-center shadow-xl">
+    <form action="./php/add-book.php" 
+          method="post" 
+          enctype="multipart/form-data" 
+          class="max-w-screen-xl mx-auto pt-28 item-center shadow-xl">
     <h1 class="mb-4 text-4xl leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Add New Book</h1>
     <div class="p-10">
         <?php if (isset($_GET['error'])) { ?>
