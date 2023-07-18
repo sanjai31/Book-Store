@@ -8,12 +8,16 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
 
     include "php/func-book.php";
     $books = get_all_books($conn);
+
     
     include "php/func-author.php";
     $authors = get_all_author($conn);
 
     include "php/func-category.php";
     $categories = get_all_categories($conn);
+
+
+    // vardump($categories);
 
 ?>
 

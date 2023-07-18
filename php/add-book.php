@@ -50,6 +50,8 @@ if (isset($_SESSION['user_id']) &&
         $book_cover = upload_file($_FILES['book_cover'], $allowed_image_exs, $path);
 
         if($book_cover['status'] == "error"){
+            echo $book_cover['status'];
+            exit;
             $em = $book_cover['data'];
 
             header("Location: ../add-book.php?error=$em&$user_input");
@@ -58,8 +60,7 @@ if (isset($_SESSION['user_id']) &&
             $allowed_file_exs = array("pdf", "docx", "pptx");
             $path = "files";
             $file = upload_file($_FILES['file'], $allowed_file_exs, $path);
-            echo $file;
-            exit;
+
             if($file['status'] == "error"){
                 $em = $file['data'];
     
