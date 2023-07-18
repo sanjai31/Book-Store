@@ -25,7 +25,6 @@ function upload_file($files, $allowed_exs, $path){
 
             $sm['status'] = 'success';
 	        $sm['data']   = $new_file_name;
-
 	        return $sm;
             
 		}else{
