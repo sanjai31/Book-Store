@@ -12,7 +12,29 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
     include "php/func-category.php";
     $categories = get_all_categories($conn);
 
+    if (isset($_GET['title'])){
+      $title = $_GET['title'];
+    }else {
+      $title = '';
+    }
 
+    if (isset($_GET['desc'])){
+      $desc = $_GET['desc'];
+    }else {
+      $desc = '';
+    }
+
+    if (isset($_GET['author_id'])){
+      $author_id = $_GET['author_id'];
+    }else {
+      $author_id = 0;
+    }
+
+    if (isset($_GET['category_id'])){
+      $category_id = $_GET['category_id'];
+    }else {
+      $category_id = 0;
+    }
     
 ?>
 
@@ -97,52 +119,82 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
         <?php  
             } 
         ?>
-        <div class="relative z-0 w-full mb-6 group">
-            <input type="text" name="book_title" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
-            <label for="floating_first_name" class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Book Title</label>
+        <div class="relative w-full mb-6 group">
+          <input
+            type="text" name="book_title" id="floating_first_name" value="<?=$title?>"
+            class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 dark:text-white"
+            aria-label="readonly input example"/>
+          <label
+            for="exampleFormControlInput50"
+            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[12px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 dark:text-white"
+            >Book Title
+          </label>
         </div>
-        <div class="relative z-0 w-full mb-8 group">
-            <input type="text" name="book_description" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" "/>
-            <label for="floating_first_name" class="peer-focus:font-medium absolute text-lg text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Book Description</label>
+        <div class="relative w-full mb-6 group">
+          <input
+            type="text" name="book_description" id="floating_first_name" value="<?=$desc?>"
+            class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 dark:text-white"
+            aria-label="readonly input example"/>
+          <label
+            for="exampleFormControlInput50"
+            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[12px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 dark:text-white"
+            >Book Description
+          </label>
         </div>
-        <div class="relative z-0 w-full mb-8 group">
-            <select name="book_author" class="floating-select" onclick="this.setAttribute('value', this.value);" value="">
-              <option value=""></option>
-              <?php
-              if ($authors == 0) {
-                
-              } 
-              else{
-                foreach ($authors as $author){
-                ?>
-                  <option value="<?=$author['id']?>">
-                      <?=$author['name']?>
-                  </option>
-              <?php } }?>
-            </select>
-            <label for="floating_first_name" class="peer-focus:font-medium absolute text-2xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 mt-3">Book Author</label>
-        </div>
-        <div class="relative z-0 w-full mb-6 group">
-              <select name="book_category" class="floating-select" onclick="this.setAttribute('value', this.value);" value="">
-              <option value=""></option>
-              <?php
-              
-              if ($categories == 0) {
+        <div class="relative w-full mb-6 group">
+          <select name="book_author" class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 dark:text-white dark:bg-slate-800">
+            <option value="">-- Select Author --</option>
+            <?php
+                      if ($authors == 0) {
 
-              } 
-              else{
-                foreach ($categories as $category){
-                  
-                ?>
-                  <option value="<?=$category['id']?>">
-                      <?=$category['name']?>
-                  </option>
-              <?php } }?>
-            </select>
-            <span class="highlight"></span>
-            <label class="peer-focus:font-medium absolute text-2xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 mt-3">Book Category</label>
+                      } 
+                      else{
+                        foreach ($authors as $author){
+                          if ($author_id == $author['id']) {
+                          
+                          
+                        ?>
+                          <option selected value="<?=$author['id']?>">
+                              <?=$author['name']?>
+                          </option>
+                      <?php }else{ ?>
+                        <option value="<?=$author['id']?>">
+                            <?=$author['name']?>
+                        </option>
+                      <?php } } }?>
+          </select>
+          <label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[12px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 dark:text-white">
+          Book Author
+          </label>
         </div>
-        <div class="relative z-0 w-full mb-6 group">
+        <div class="relative w-full mb-4 group">
+          <select name="book_category" class="peer h-full w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 dark:text-white dark:bg-slate-800">
+            <option value="">-- Select Category --</option>
+            <?php
+
+                      if ($categories == 0) {
+                      
+                      } 
+                      else{
+                        foreach ($categories as $category){
+                          if ($category_id == $category['id']) {
+                          
+                          
+                        ?>
+                          <option selected value="<?=$category['id']?>">
+                              <?=$category['name']?>
+                          </option>
+                      <?php }else{ ?>
+                        <option value="<?=$category['id']?>">
+                            <?=$category['name']?>
+                        </option>
+                      <?php } } }?>
+          </select>
+          <label class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[12px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 dark:text-white">
+          Book Category
+          </label>
+        </div>
+        <div class="relative z-0 w-full mb-4 group">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="multiple_files">Book Cover</label>
             <input class="block block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer 50bg-gray- dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="book_cover" id="file_input" type="file">
         </div>

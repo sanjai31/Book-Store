@@ -23,7 +23,7 @@ if (isset($_SESSION['user_id']) &&
 		$author      = $_POST['book_author'];
 		$category    = $_POST['book_category'];
 
-		$user_input = 'title='.$title.'&category='.$category.'&desc='.$description;
+		$user_input = 'title='.$title.'&category_id='.$category.'&desc='.$description.'&author_id='.$author;
 
         $text = "Book title";
         $location = "../add-book.php";

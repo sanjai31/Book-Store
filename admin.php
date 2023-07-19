@@ -167,7 +167,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
                         <td class="px-6 py-4"><?=$j?></td>
                         <td class="px-6 py-4"><?=$category['name']?></td>
                         <td class="px-6 py-4 flex gap-3">
-                            <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
+                            <a href="edit-category.php?id=<?=$category['id']?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
                             <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800">Delete</a>
                         </td>
                     </tr>
