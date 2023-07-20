@@ -20,5 +20,12 @@ catch(PDOException $e){
 }
 
 
+// $conn = mysqli_connect($sName, $uName, $pass, $db_name);
+
+// if (!$conn) {
+// die('Could not connect to MySQL: ' . mysqli_connect_error());
+// }
+
+// echo 'Connected successfully';
 
 ?>

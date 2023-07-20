@@ -15,7 +15,20 @@ function get_all_author($con){
     return $authors;
 }
 
+function get_author($con, $id){
+    $sql = "SELECT * FROM authors WHERE id=?";
+    $stmt = $con->prepare($sql);
+    $stmt->execute([$id]);
 
+    if($stmt->rowCount() > 0){
+        $author = $stmt->fetch();
+    }
+    else{
+        $author = 0;
+    }
+
+    return $author;
+}
 
 
 

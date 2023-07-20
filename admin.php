@@ -131,8 +131,8 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
                             ?>
                         </td>
                         <td class="px-6 py-4 flex justify-around">
-                            <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
-                            <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800">Delete</a>
+                            <a href="edit-book.php?id=<?=$book['id']?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
+                            <a href="delete-book.php?id=<?=$book['id']?>" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -151,9 +151,9 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 shadow-xl">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-6 py-3">#</th>
-                      <th scope="col" class="px-6 py-3">Category Name</th>
-                      <th scope="col" class="px-6 py-3">Action</th>
+                      <th scope="col" class="px-6 py-3 w-[20%]">#</th>
+                      <th scope="col" class="px-6 py-3 w-[70%]">Category Name</th>
+                      <th scope="col" class="px-6 py-3 text-center">Action</th>
                     </tr>
                 </thead>
 
@@ -168,7 +168,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
                         <td class="px-6 py-4"><?=$category['name']?></td>
                         <td class="px-6 py-4 flex gap-3">
                             <a href="edit-category.php?id=<?=$category['id']?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
-                            <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800">Delete</a>
+                            <a href="" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800">Delete</a>
                         </td>
                     </tr>
                     <?php } ?>
@@ -188,9 +188,9 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 shadow-xl">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-6 py-3">#</th>
-                      <th scope="col" class="px-6 py-3">Author Name</th>
-                      <th scope="col" class="px-6 py-3">Action</th>
+                      <th scope="col" class="px-6 py-3 w-[20%]">#</th>
+                      <th scope="col" class="px-6 py-3 w-[70%]">Author Name</th>
+                      <th scope="col" class="px-6 py-3 text-center">Action</th>
                     </tr>
                 </thead>
 
@@ -204,7 +204,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
                         <td class="px-6 py-4"><?=$k?></td>
                         <td class="px-6 py-4"><?=$author['name']?></td>
                         <td class="px-6 py-4 flex gap-3">
-                            <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
+                            <a href="edit-author.php?id=<?=$author['id']?>" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
                             <a href="#" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-600 focus:outline-none dark:focus:ring-red-800">Delete</a>
                         </td>
                     </tr>
@@ -225,4 +225,4 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
 <?php } else{
     header("Location: login.php");
     exit;
-}
+}?>

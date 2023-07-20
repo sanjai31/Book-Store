@@ -4,37 +4,28 @@ session_start();
 
 if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
 
-    include "db_conn.php";    
+    if (!isset($_GET['id'])){
+        header("Location: admin.php");
+        exit;
+    }
+
+    $id = $_GET['id'];
+
+    include "db_conn.php";
+
+    include "php/func-book.php";
+    $book = get_book($conn, $id);
+    
+    if($book == 0){
+        header("Location: admin.php");
+        exit;
+    }
 
     include "php/func-author.php";
     $authors = get_all_author($conn);
 
     include "php/func-category.php";
     $categories = get_all_categories($conn);
-
-    if (isset($_GET['title'])){
-      $title = $_GET['title'];
-    }else {
-      $title = '';
-    }
-
-    if (isset($_GET['desc'])){
-      $desc = $_GET['desc'];
-    }else {
-      $desc = '';
-    }
-
-    if (isset($_GET['author_id'])){
-      $author_id = $_GET['author_id'];
-    }else {
-      $author_id = 0;
-    }
-
-    if (isset($_GET['category_id'])){
-      $category_id = $_GET['category_id'];
-    }else {
-      $category_id = 0;
-    }
     
 ?>
 
@@ -45,7 +36,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Book</title>
+    <title>Edit Book</title>
 
     
     <!-- Font awesome cdn link -->
@@ -81,8 +72,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
             <a href="index.php" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Store</a>
           </li>
           <li>
-          <a href="add-book.php" class="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Add Book</a>
-            
+            <a href="add-book.php" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Add Book</a>
           </li>
           <li>
             <a href="add-category.php" class="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Add Category</a>
@@ -99,11 +89,11 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
       </div>
     </nav>
     
-    <form action="./php/add-book.php" 
+    <form action="./php/edit-book.php" 
           method="post" 
           enctype="multipart/form-data" 
           class="max-w-screen-xl mx-auto pt-28 item-center shadow-xl">
-    <h1 class="mb-4 text-4xl leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Add New Book</h1>
+    <h1 class="mb-4 text-4xl leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">Edit Book</h1>
     <div class="p-10">
         <?php if (isset($_GET['error'])) { ?>
             <div class="border border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700 mb-3" role="alert">
@@ -121,7 +111,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
         ?>
         <div class="relative w-full mb-6 group">
           <input
-            type="text" name="book_title" id="floating_first_name" value="<?=$title?>"
+            type="text" name="book_title" value="<?=$book['title']?>"
             class="peer w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 dark:text-white"
             aria-label="readonly input example"/>
           <label
@@ -129,10 +119,13 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
             class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[12px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500 dark:text-white"
             >Book Title
           </label>
+          <input
+            type="text" name="book_id" value="<?=$book['id']?>"
+            aria-label="readonly input example" style="display:none;"/>
         </div>
         <div class="relative w-full mb-6 group">
           <input
-            type="text" name="book_description" id="floating_first_name" value="<?=$desc?>"
+            type="text" name="book_description" id="floating_first_name" value="<?=$book['description']?>"
             class="peer w-full rounded-[7px] border border-blue-gray-200 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50 dark:text-white"
             aria-label="readonly input example"/>
           <label
@@ -150,7 +143,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
                       } 
                       else{
                         foreach ($authors as $author){
-                          if ($author_id == $author['id']) {
+                          if ($book['author_id'] == $author['id']) {
                           
                           
                         ?>
@@ -177,7 +170,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
                       } 
                       else{
                         foreach ($categories as $category){
-                          if ($category_id == $category['id']) {
+                          if ($book['category_id'] == $category['id']) {
                           
                           
                         ?>
@@ -197,12 +190,20 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
         <div class="relative z-0 w-full mb-4 group">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="multiple_files">Book Cover</label>
             <input class="block block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer 50bg-gray- dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="book_cover" id="file_input" type="file">
+            <input
+            type="text" name="current_cover" value="<?=$book['cover']?>"
+            aria-label="readonly input example" style="display:none;"/>
+            <a href="assets/cover/<?=$book['cover']?>" class="no-underline hover:underline">Current Cover</a>
         </div>
         <div class="relative z-0 w-full mb-6 group">
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="multiple_files">File</label>
             <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="file" id="file_input" type="file">
+            <input
+            type="text" name="current_file" value="<?=$book['file']?>"
+            aria-label="readonly input example" style="display:none;"/>
+            <a href="assets/files/<?=$book['file']?>" class="no-underline hover:underline">Current File</a>
         </div>
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Book</button>
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
     </div>
 
     </form>
@@ -215,4 +216,5 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
 <?php } else{
     header("Location:login.php");
     exit;
-} ?>
+}
+?>

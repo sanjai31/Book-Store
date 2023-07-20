@@ -15,5 +15,19 @@ function get_all_books($con){
     return $books;
 }
 
+function get_book($con,$id){
+    $sql = "SELECT * FROM books WHERE id=?";
+    $stmt = $con->prepare($sql);
+    $stmt->execute([$id]);
+
+    if($stmt->rowCount() > 0){
+        $book = $stmt->fetch();
+    }
+    else{
+        $book = 0;
+    }
+
+    return $book;
+}
 
 ?>
