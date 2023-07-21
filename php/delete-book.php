@@ -1,47 +1,62 @@
 <?php
 session_start();
 
-if(isset($_SESSION['user_id']) && isset($_SESSION['user_email'])){
-
+if (isset($_SESSION['user_id']) && isset($_SESSION['user_email'])) {
     include "../db_conn.php";
 
-    if(isset($_GET['id'])) {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    if (isset($_GET['id'])) {
         $id = $_GET['id'];
 
         if (empty($id)) {
             $em = "Error Occurred";
             header("Location: ../admin.php?error=$em");
             exit;
-        }
-        else{
+        } else {
 
             $sql1 = "SELECT * FROM books WHERE id=?";
-            $stmt = $conn->prepare($sql1);
-            $res = $stmt->execute([$name, $id]);
+            $stmt1 = $conn->prepare($sql1);
 
-            $sql = "DELETE books SET name=? WHERE id=?";
-            $stmt = $conn->prepare($sql);
-            $res = $stmt->execute([$name, $id]);
+            $stmt1->execute([$id]);
+            $the_book = $stmt1->fetch();
 
-            if($res){
-                $sm = "Successfully Updated";
-                header("Location: ../edit-author.php?success=$sm&id=$id");
-                exit;
-            }
-            else{
-                $em = "Unknown Error Occurred";
-                header("Location: ../edit-author.php?error=$em&id=$id");
+            if ($stmt1->rowCount() > 0) {
+                $sql = "DELETE FROM books WHERE id=?";
+                $stmt = $conn->prepare($sql);
+                $res = $stmt->execute([$id]);
+
+                if ($res) {
+                    $cover = $the_book['cover'];
+                    $file = $the_book['file'];
+                    $c_b_c = "../assets/cover/$cover";
+                    $c_f = "../assets/files/$file";
+                    unlink($c_b_c);
+                    unlink($c_f);
+
+                    $sm = "Successfully Removed";
+                    header("Location: ../admin.php?success=$sm");
+                    exit;
+                } else {
+                    $em = "Unknown Error Occurred";
+                    header("Location: ../admin.php?error=$em");
+                    exit;
+                }
+            } else {
+                $em = "Error Occurred";
+                header("Location: ../admin.php?error=$em");
                 exit;
             }
         }
 
-    }else{
+    } else {
         header("Location: ../admin.php");
         exit;
     }
-}else{
+} else {
     header("Location: ../admin.php");
     exit;
 }
-
 ?>
